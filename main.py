@@ -32,3 +32,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print("Terima kasih telah menggunakan PyCommerce. Sampai Jumpa Lagi!")
