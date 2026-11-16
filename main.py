@@ -33,5 +33,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-print("adam bodok")
+print("adam tolol")
 
