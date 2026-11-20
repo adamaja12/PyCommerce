@@ -1,14 +1,30 @@
+import re
 from database import daftar_produk, keranjang, riwayat_pesanan
 from utils import cetak_tabel, menu_user
 
 def mulai_jual():
-    print("\n=== TAMBAH PRODUK JUALAN BARU ===")
-    id_baru = input("Masukkan ID Produk Unik (Contoh: K005) : ")
+    print("\n=== TAMBAH PRODUK BARU ===")
+    id_baru = input("Masukkan ID Produk (Contoh: K005) : ").strip()
     if id_baru in daftar_produk:
         print("❗ ID Produk sudah terdaftar! Gunakan ID lain.")
         return
-        
-    nama_p = input("Nama Produk : ")
+
+    MIN_LEN = 3
+    MAX_LEN = 15
+
+    while True:
+        nama_p = input(f"Nama Produk (hanya huruf, {MIN_LEN}-{MAX_LEN} karakter): ").strip()
+
+        if not (MIN_LEN <= len(nama_p) <= MAX_LEN):
+            print (f"❗ Nama produk harus memiliki panjang antara {MIN_LEN} hingga {MAX_LEN} karakter.")
+            continue
+
+        if not re.match("^[A-Za-z\\s]+$", nama_p):
+            print("❗Nama produk hanya boleh mengandung huruf dan spasi (tidak boleh ada angka atau simbol).")
+            continue
+
+        break
+
     try:
         stok_p = int(input("Jumlah Stok : "))
         harga_p = int(input("Harga Satuan (Rp) : "))
