@@ -13,7 +13,6 @@ def cetak_tabel(field_names, data_rows):
     table.hrules = ALL
     for row in data_rows:
         table.add_row(row)
-        
     print(table)
 
 def ambil_password(prompt="Masukkan Password Akun : "):
@@ -21,7 +20,38 @@ def ambil_password(prompt="Masukkan Password Akun : "):
 
 def bersihkan_layar():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+class Batal(Exception):
+    pass
+
+def input_batal(promt):
+    data = input(promt)
+
+    if data.lower() == "batal":
+        raise Batal
+
+    return data
+
+def validasi_password(password):
+    if len(password) < 4:
+        return "Password minimal 4 karekter."
+
+    if len(password) > 8:
+        return "Password maksimal 8 karakter."
+
+    if not re.search(r"[A-Z]", password):
+        return "Password Harus Mengandung Minimal 1 Huruf Kapital."
+
+    if not re.search(r"[a-z]", password):
+        return "Password Harus Mengandung Minimal 1 Huruf Kecil."
+
+    if not re.search(r"\d", password):
+        return "Password Harus Mengandung Minimal 1 Angka."
+
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        return "Password Harus Memiliki Minimal 1 Simbol"
     
+    return "Password Valid"
 
 def menu_awal():
     field_names = ["No", "Menu Utama PyCommerce"]
@@ -33,8 +63,8 @@ def menu_awal():
     ]
     cetak_tabel(field_names, rows)
 
-def menu_admin():
-    field_names = ["No", "Opsi Menu Admin"]
+def menu_admin(username):
+    field_names = ["No", f"Opsi Menu Admin ({username})"]
     rows = [
         ["1", "Lihat Daftar Akun User"],
         ["2", "Hapus Akun dari Daftar Akun User"],
